@@ -3,6 +3,14 @@ import sys
 import json
 import requests
 import hashlib
+import time
+
+# ThreatGrid Settings
+tgurl = 'https://panacea.threatgrid.com/api/v2/samples'
+tg_api_key = 'YOUR_API_KEY_HERE'
+
+###NOTE the samples are submitted as private
+form_data = {'api_key': tg_api_key, 'private': 'true'}
 
 def md5hash(file):
     BSIZE = 65536
@@ -77,12 +85,6 @@ else:
     # Append the provided parameter to input_files
     input_files.append(input_param)
 
-# ThreatGrid Settings
-tgurl = 'https://panacea.threatgrid.com/api/v2/samples'
-tg_api_key = 'YOURAPIKEYHERE'
-
-form_data = {'api_key': tg_api_key, 'private': 'true'}
-
 number_of_files = len(input_files)
 
 print("------------------------")
@@ -92,3 +94,5 @@ print()
 for file in input_files:
     sample = {'sample': open(file, 'rb')}
     submit_file(sample)
+
+time.sleep(10)
